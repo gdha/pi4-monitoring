@@ -1,0 +1,2 @@
+dha@n1:~/projects/pi4-monitoring/traefik$ kubectl apply -f traefik-servicemonitor.yaml
+servicemonitor.monitoring.coreos.com/traefik created

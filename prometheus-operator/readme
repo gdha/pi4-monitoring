@@ -1,0 +1,40 @@
+wget https://raw.githubusercontent.com/prometheus-operator/prometheus-operator/master/bundle.yaml
+
+$ grep 'namespace: default' bundle.yaml
+  namespace: default
+  namespace: default
+  namespace: default
+  namespace: default
+
+$ sed -i 's/namespace: default/namespace: monitoring/g' bundle.yaml
+
+$ grep 'namespace: ' bundle.yaml
+                      a `namespace: <object namespace>` matcher.'
+  namespace: monitoring
+  namespace: monitoring
+  namespace: monitoring
+  namespace: monitoring
+
+$ kubectl create -f ../monitoring-namespace.yaml 
+namespace/monitoring created
+
+$ kubectl apply --server-side -f bundle.yaml 
+customresourcedefinition.apiextensions.k8s.io/alertmanagerconfigs.monitoring.coreos.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/alertmanagers.monitoring.coreos.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/podmonitors.monitoring.coreos.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/probes.monitoring.coreos.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/prometheuses.monitoring.coreos.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/prometheusrules.monitoring.coreos.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/servicemonitors.monitoring.coreos.com serverside-applied
+customresourcedefinition.apiextensions.k8s.io/thanosrulers.monitoring.coreos.com serverside-applied
+clusterrolebinding.rbac.authorization.k8s.io/prometheus-operator serverside-applied
+clusterrole.rbac.authorization.k8s.io/prometheus-operator serverside-applied
+deployment.apps/prometheus-operator serverside-applied
+serviceaccount/prometheus-operator serverside-applied
+service/prometheus-operator serverside-applied
+
+
+ kubectl get pods -n monitoring
+NAME                                   READY   STATUS    RESTARTS   AGE
+prometheus-operator-6d56dc87f4-tg5qh   1/1     Running   0          25s
+

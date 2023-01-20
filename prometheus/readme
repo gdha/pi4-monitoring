@@ -1,0 +1,43 @@
+See https://rpi4cluster.com/monitoring/k3s-prometheus/
+and https://computingforgeeks.com/setup-prometheus-and-grafana-on-kubernetes/
+
+$ kubectl label node n1 n2 n3 n4 n5 node-role.kubernetes.io/worker=true
+node/n1 labeled
+node/n2 labeled
+node/n3 labeled
+node/n4 labeled
+node/n5 labeled
+
+$ kubectl get node --selector='node-role.kubernetes.io/worker'
+NAME   STATUS   ROLES                         AGE      VERSION
+n1     Ready    control-plane,master,worker   2y160d   v1.24.4+k3s1
+n2     Ready    worker                        2y160d   v1.23.6+k3s1
+n3     Ready    worker                        2y160d   v1.24.4+k3s1
+n4     Ready    worker                        2y160d   v1.24.4+k3s1
+n5     Ready    worker                        2y160d   v1.24.4+k3s1
+
+
+gdha@n1:~/projects/pi4-monitoring$ kubectl apply -f prometheus/
+clusterrole.rbac.authorization.k8s.io/prometheus created
+clusterrolebinding.rbac.authorization.k8s.io/prometheus created
+serviceaccount/prometheus created
+service/prometheus-external created
+service/prometheus created
+prometheus.monitoring.coreos.com/prometheus-persistant created
+
+$ kubectl get endpoints -n monitoring
+NAME                  ENDPOINTS                                                              AGE
+prometheus-operator   10.42.2.217:8080                                                       15m
+node-exporter         192.168.0.201:9100,192.168.0.202:9100,192.168.0.203:9100 + 2 more...   13m
+kube-state-metrics    10.42.2.218:8081,10.42.2.218:8080                                      11m
+prometheus            10.42.2.219:9090                                                       47s
+prometheus-external   10.42.2.219:9090                                                       47s
+prometheus-operated   10.42.2.219:9090                                                       47s
+$ kubectl get svc -n monitoring
+NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP     PORT(S)             AGE
+prometheus-operator   ClusterIP      None            <none>          8080/TCP            16m
+node-exporter         ClusterIP      None            <none>          9100/TCP            14m
+kube-state-metrics    ClusterIP      None            <none>          8080/TCP,8081/TCP   12m
+prometheus-external   LoadBalancer   10.43.179.122   192.168.0.242   9090:30549/TCP      99s
+prometheus            ClusterIP      10.43.19.14     <none>          9090/TCP            99s
+prometheus-operated   ClusterIP      None            <none>          9090/TCP            99s
