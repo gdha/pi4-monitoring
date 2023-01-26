@@ -1,6 +1,7 @@
 See https://rpi4cluster.com/monitoring/k3s-prometheus/
 and https://computingforgeeks.com/setup-prometheus-and-grafana-on-kubernetes/
 
+### We could label our nodes with the 'worker' label, but we do not use it so we can skip these 2 steps.
 $ kubectl label node n1 n2 n3 n4 n5 node-role.kubernetes.io/worker=true
 node/n1 labeled
 node/n2 labeled

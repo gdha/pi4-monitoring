@@ -1,6 +1,7 @@
 See https://github.com/kubernetes/kube-state-metrics for latest release
 
-gdha@n1:~/projects/pi4-monitoring$ kubectl apply -f kube-state-metrics/
+$ cd /projects/pi4-monitoring
+$ kubectl apply -f kube-state-metrics/
 clusterrole.rbac.authorization.k8s.io/kube-state-metrics created
 clusterrolebinding.rbac.authorization.k8s.io/kube-state-metrics created
 deployment.apps/kube-state-metrics created
