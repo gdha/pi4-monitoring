@@ -2,12 +2,12 @@
 
 This is completely based on https://rpi4cluster.com/monitoring/monitor-intro/
 
-The purpose of this project is to introduce prometheus to gather some nice cluster metrics and grafana to be able to visualize the output from graphite in a nice graphs, like:
+The purpose of this project is to introduce the prometheus tool to gather some cluster metrics and the grafana tool to be able to visualize the output from graphite in nicer graphs, for example the outcome from project [pi4-graphite](https://github.com/gdha/pi4-graphite):
 
 * The raw graphite celsius graph: 
 <img alt="graphite browser" src="images/grahpite.png" width="400">
 
-* The nices grafana celsius graph:
+* The nicer grafana celsius graph we made within the grafana tool:
 <img alt="grafana browser" src="images/pi4-celsius-grafana.png" width="400">
 
 The sequence of execution is the following:
